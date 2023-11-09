@@ -1,19 +1,16 @@
-import { useAtom } from 'jotai'
-import { localisationAtom } from '../Atoms/localisationAtom';
-import { useNavigate } from "react-router-dom";
+import { Context } from './LocaleWrapper'
+import { useContext } from 'react'
 
 export default function LanguageSwitch() {
-  const [language, setLanguage] = useAtom(localisationAtom)
-  const navigate = useNavigate();
+  const context = useContext(Context)
+  console.log(context.locale.toString().slice(0, 2))
 
-  const switchLanguage = () => {
-    setLanguage(language === "en" ? "fr" : "en")
-    navigate("/");
-  };
 
   return (
-  <div>
-    <button onClick={switchLanguage} className="text-2xl dark:text-white">{language || "no language set"}</button>
-  </div>
+       <select className="bg-black text-white border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1" value = {context.locale} onChange={context.selectLanguage}>
+         <option selected value= 'en'>English</option>
+         <option value= 'fr'>French</option>
+       </select>
   )
 }
+
