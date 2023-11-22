@@ -7,6 +7,7 @@ import { PrivateRoute } from './Components/PrivateRoute'
 import { Home } from './Pages/Home'
 import { Profile } from './Pages/Profile'
 import { Footer}  from './Components/Footer'
+import { ArticlesList } from './Pages/ArticlesList'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Header />
             <Routes>
               <Route path='/' element={<Home />} />
+              <Route path='/articles' element={<ArticlesList />} />
               <Route path='/me' element={
                 <PrivateRoute>
                   <Profile />

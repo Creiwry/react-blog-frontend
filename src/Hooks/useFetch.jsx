@@ -7,20 +7,34 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       setIsPending(true);
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(response.statusText)
-        const json = await response.json();
-        setIsPending(false);
-        setData(json);
-        setError(null);
-      } catch (error) {
-        setError(`${error} Could not Fetch Data`);
-        setIsPending(false);
+      fetch(url, {
+          method: 'get', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      .then(response => {
+          if(!response.ok){
+            console.log('issue')
+            throw new Error(response.statusText)
+          } else {
+            console.log('ok')
+            return response.json()
+          }
+        }) 
+      .then(data => { 
+            console.log('setting data')
+          setIsPending(false);
+          setData(data.data);
+          setError(null);
+        })
+      .catch((error) => {
+          setError(`${error} Could not Fetch Data`);
+          setIsPending(false);
+        });
       }
-    }
     fetchData
   }, [url])
 
